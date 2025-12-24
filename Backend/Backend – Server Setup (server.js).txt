@@ -1,0 +1,59 @@
+Backend – Server Setup (server.js)
+
+const express = require("express");
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+const cors = require("cors");
+
+const app = express();
+app.use(express.json());
+app.use(cors());
+
+// Connect to MongoDB
+mongoose.connect("mongodb://127.0.0.1:27017/lostfound");
+
+// User Schema
+const UserSchema = new mongoose.Schema({
+    name: String,
+    email: { type: String, unique: true },
+    password: String
+});
+
+const User = mongoose.model("User", UserSchema);
+
+// Registration API
+app.post("/register", async (req, res) => {
+    const { name, email, password } = req.body;
+
+    // Backend validation
+    if (!name || !email || !password) {
+        return res.json({ message: "All fields are required" });
+    }
+
+    if (password.length < 6) {
+        return res.json({ message: "Password must be at least 6 characters" });
+    }
+
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+        return res.json({ message: "Email already registered" });
+    }
+
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = new User({
+        name,
+        email,
+        password: hashedPassword
+    });
+
+    await user.save();
+    res.json({ message: "Registration successful" });
+});
+
+// Start server
+app.listen(3000, () => {
+    console.log("Server running on port 3000");
+});
