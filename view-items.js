@@ -17,6 +17,12 @@ async function loadItems() {
             Description: ${item.description}<br>
             Posted By: ${item.userId.name}<br>
             Date: ${new Date(item.date).toLocaleDateString()}
+            function logout() {
+    localStorage.removeItem("userId");
+    alert("Logged out successfully");
+    window.location.href = "login.html";
+}
+
         `;
 
         container.appendChild(div);
