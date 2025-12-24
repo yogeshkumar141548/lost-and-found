@@ -1,4 +1,3 @@
-Backend – Post Item API (server.js)
 
 app.post("/post-item", async (req, res) => {
     const { itemName, type, description, userId } = req.body;
@@ -17,3 +16,4 @@ app.post("/post-item", async (req, res) => {
     await item.save();
     res.json({ message: "Item posted successfully" });
 });
+
