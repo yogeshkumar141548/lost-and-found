@@ -1,5 +1,3 @@
-Backend – Item Schema (server.js)
-
 
 const ItemSchema = new mongoose.Schema({
     itemName: String,
@@ -16,3 +14,4 @@ const ItemSchema = new mongoose.Schema({
 });
 
 const Item = mongoose.model("Item", ItemSchema);
+
