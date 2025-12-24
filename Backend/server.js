@@ -9,9 +9,16 @@ app.use(express.json());
 app.use(cors());
 
 // 1️⃣ Connect to MongoDB
-mongoose.connect("mongodb://127.0.0.1:27017/lostfound", {
+mongoose.connect(
+  "mongodb+srv://yogeshkumar141548_db_user:<db_password>@cluster0.pzee1hn.mongodb.net/lostfound?retryWrites=true&w=majority",
+  {
     useNewUrlParser: true,
     useUnifiedTopology: true
+  }
+)
+.then(() => console.log("MongoDB Atlas connected"))
+.catch((err) => console.log(err));
+
 })
 .then(() => console.log("MongoDB connected"))
 .catch(err => console.log(err));
