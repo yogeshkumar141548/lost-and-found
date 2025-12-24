@@ -1,4 +1,3 @@
-Backend – Server Setup (server.js)
 
 const express = require("express");
 const mongoose = require("mongoose");
@@ -57,3 +56,4 @@ app.post("/register", async (req, res) => {
 app.listen(3000, () => {
     console.log("Server running on port 3000");
 });
+
