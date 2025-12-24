@@ -1,0 +1,26 @@
+Backend – Login API (server.js)
+
+// Login API
+app.post("/login", async (req, res) => {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+        return res.json({ message: "All fields are required" });
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+        return res.json({ message: "User not found" });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+        return res.json({ message: "Invalid password" });
+    }
+
+    res.json({
+        success: true,
+        message: "Login successful",
+        userId: user._id
+    });
+});
